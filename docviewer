@@ -1,0 +1,72 @@
+#!/bin/csh
+
+switch($#argv)
+case    0:
+    set args = ($argv)
+    breaksw
+default:
+    switch("$1")
+    case    "-h":
+    case    "--help":
+	echo "Usage: $0 [-h|--help]"
+	echo "       $0 [-v|--viewers 'viewer-list'] [arguments]"
+	echo "NOTE: (viewer-list must be quoted to separate it from arguments)"
+	echo ""
+	echo "Example:"
+	echo "  $0 -v 'konqueror ephipany lynx' http://www.google.com"
+	exit 0
+	breaksw
+    case    "-v":
+    case    "--viewers":
+	set viewers = ($2)
+	set document = "$argv[3]"
+	breaksw
+    default:
+	set document = "$argv[1]"
+	breaksw
+    endsw
+endsw
+
+# If no viewer list given on the command line, check the env
+if ( ! $?viewers ) then
+    if ( $?DOCVIEWERS ) then
+	set viewers = ($DOCVIEWERS)
+    else
+	# The order of the viewers here is an attempt to rank them in order
+	# of most likely to be an add-on.  The idea is to use the viewer that
+	# a user chose to install over those included with the base system.
+	set viewers = ( \
+	    acroread8 \
+	    epdfview \
+	    kpdf \
+	    okular \
+	    evince \
+	    Preview \
+	    )
+	if ( `uname` == 'Darwin' ) then
+	    # Mac OS X has an 'open' command that runs the default app
+	    # for a given argument.
+	    set viewers = (open $viewers)
+	endif
+    endif
+endif
+
+# Find a viewer from the list
+foreach viewer ( ${viewers} )
+    which ${viewer} >& /dev/null
+    if ( $status == 0 ) then
+	echo ${viewer} ${document}
+	${viewer} "${document}"
+	exit $status
+    endif
+end
+
+# Didn't find anything...
+echo "None of the following viewers were found on this system:"
+echo ""
+echo ${viewers}
+echo ""
+echo "Make sure at least on of these viewers is installed and your PATH is"
+echo "properly configured."
+exit 1
+

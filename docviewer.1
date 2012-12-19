@@ -1,0 +1,66 @@
+.TH DOCVIEWER 1
+.SH NAME    \" Section header
+.PP
+
+docviewer - run the best available document viewer on this system
+
+.SH SYNOPSIS
+.PP
+.nf 
+.na 
+docviewer [-h|--help]
+docviewer [-v|--viewers 'viewer list'] [arguments to selected viewer]
+.ad
+.fi
+
+.SH "DESCRIPTION"
+
+.B docviewer
+attempts to find and run the best available document viewer
+from a list, which may be specified on the command line, via the
+environment, or from a built in default list.
+
+.B docviewer
+is intended for use from applications that use PDF or other viewer-based
+documentation, where you prefer not to depend on a specific viewer.
+
+A viewer list specified on the command line overrides other lists.  If
+no list is specified on the command line,
+.B docviewer
+checks the environment variable
+.B DOCVIEWERS.
+If this variable does not exist,
+.B docviewer
+falls back to a built-in default list.  The default list generally gives
+lowest priority to bundled viewers, such as kpdf, okular, evince, Preview,
+etc. on the assumption that if another viewer was manually installed, then
+it must be preferred.
+
+Additional arguments are passed on to whichever viewer is invoked.  It is
+the user's (or calling application's) responsibility to ensure that the
+arguments are appropriate for any viewer that might be selected.  Generally,
+only the names of documents should be given as arguments.
+
+.SH OPTIONS
+
+.TP
+.B "-h, --help"
+Display a brief usage synopsis.
+
+.TP
+.B "-v, --viewers 'list'"
+Select from 'list' instead of the default list.  The list must be quoted
+in order to separate it from 'arguments'.
+
+.SH ENVIRONMENT
+.nf
+.na
+$DOCVIEWERS
+.ad
+.fi
+
+.SH AUTHOR
+.nf
+.na
+Jason W. Bacon
+
