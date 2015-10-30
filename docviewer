@@ -36,9 +36,9 @@ if ( ! $?viewers ) then
 	# of most likely to be an add-on.  The idea is to use the viewer that
 	# a user chose to install over those included with the base system.
 	set viewers = ( \
-	    acroread8 \
+	    mupdf \
 	    epdfview \
-	    kpdf \
+	    atril \
 	    okular \
 	    evince \
 	    Preview \
