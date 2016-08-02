@@ -38,6 +38,7 @@ if ( ! $?viewers ) then
 	set viewers = ( \
 	    mupdf \
 	    epdfview \
+	    qpdfview \
 	    atril \
 	    okular \
 	    evince \
