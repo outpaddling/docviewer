@@ -36,12 +36,13 @@ if ( ! $?viewers ) then
 	# of most likely to be an add-on.  The idea is to use the viewer that
 	# a user chose to install over those included with the base system.
 	set viewers = ( \
-	    acroread8 \
+	    qpdfview \
+	    atril \
 	    epdfview \
-	    kpdf \
 	    okular \
 	    evince \
 	    Preview \
+	    mupdf \
 	    )
 	if ( `uname` == 'Darwin' ) then
 	    # Mac OS X has an 'open' command that runs the default app
